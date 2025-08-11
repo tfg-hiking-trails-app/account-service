@@ -11,10 +11,10 @@ EXPOSE 8080
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["AccountService.API/AccountService.API.csproj", "AccountService.API/"]
-RUN dotnet restore "./AccountService.API/AccountService.API.csproj"
+COPY ["account-service/AccountService.API/AccountService.API.csproj", "account-service/AccountService.API/"]
+RUN dotnet restore "./account-service/AccountService.API/AccountService.API.csproj"
 COPY . .
-WORKDIR "/src/AccountService.API"
+WORKDIR "/src/account-service/AccountService.API"
 RUN dotnet build "./AccountService.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Esta fase se usa para publicar el proyecto de servicio que se copiará en la fase final.
