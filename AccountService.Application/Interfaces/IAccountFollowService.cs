@@ -1,0 +1,10 @@
+﻿using AccountService.Application.DTOs;
+using AccountService.Application.DTOs.Create;
+using AccountService.Application.DTOs.Update;
+using Common.Application.Interfaces;
+
+namespace AccountService.Application.Interfaces;
+
+public interface IAccountFollowService : IService<AccountFollowEntityDto, CreateAccountFollowEntityDto, UpdateAccountFollowEntityDto>
+{
+}

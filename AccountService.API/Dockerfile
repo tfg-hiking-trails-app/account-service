@@ -11,7 +11,16 @@ EXPOSE 8080
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+# Account Service
 COPY ["account-service/AccountService.API/AccountService.API.csproj", "account-service/AccountService.API/"]
+COPY ["account-service/AccountService.Application/AccountService.Application.csproj", "account-service/AccountService.Application/"]
+COPY ["account-service/AccountService.Domain/AccountService.Domain.csproj", "account-service/AccountService.Domain/"]
+COPY ["account-service/AccountService.Infrastructure/AccountService.Infrastructure.csproj", "account-service/AccountService.Infrastructure/"]
+# Common library
+COPY ["hiking-trail-common/Common.API/Common.API.csproj", "hiking-trail-common/Common.API/"]
+COPY ["hiking-trail-common/Common.Application/Common.Application.csproj", "hiking-trail-common/Common.Application/"]
+COPY ["hiking-trail-common/Common.Domain/Common.Domain.csproj", "hiking-trail-common/Common.Domain/"]
+COPY ["hiking-trail-common/Common.Infrastructure/Common.Infrastructure.csproj", "hiking-trail-common/Common.Infrastructure/"]
 RUN dotnet restore "./account-service/AccountService.API/AccountService.API.csproj"
 COPY . .
 WORKDIR "/src/account-service/AccountService.API"

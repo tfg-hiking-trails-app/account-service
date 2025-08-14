@@ -5,6 +5,20 @@ VisualStudioVersion = 17.14.36327.8 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountService.API", "AccountService.API\AccountService.API.csproj", "{A067EA33-88AC-43CC-AFC3-D839392C85BC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountService.Application", "AccountService.Application\AccountService.Application.csproj", "{7A99B5AD-4774-4AF5-B5FB-3E5144B51299}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountService.Domain", "AccountService.Domain\AccountService.Domain.csproj", "{938E4ADF-67E1-4472-9F8F-424B407C5C43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountService.Infrastructure", "AccountService.Infrastructure\AccountService.Infrastructure.csproj", "{EC6DFBF8-994D-49C2-A59E-16E23409B177}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Application", "..\hiking-trail-common\Common.Application\Common.Application.csproj", "{81E335BB-61FF-4F0C-856B-00ED0E15C5BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Infrastructure", "..\hiking-trail-common\Common.Infrastructure\Common.Infrastructure.csproj", "{26B53F0E-B4A3-4F1D-B352-898076AE3273}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Domain", "..\hiking-trail-common\Common.Domain\Common.Domain.csproj", "{DE6259B1-4354-4D46-B272-EB9F8621586F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.API", "..\hiking-trail-common\Common.API\Common.API.csproj", "{460AD399-0D8B-46F1-B9A5-30578128CE6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +29,34 @@ Global
 		{A067EA33-88AC-43CC-AFC3-D839392C85BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A067EA33-88AC-43CC-AFC3-D839392C85BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A067EA33-88AC-43CC-AFC3-D839392C85BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A99B5AD-4774-4AF5-B5FB-3E5144B51299}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A99B5AD-4774-4AF5-B5FB-3E5144B51299}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A99B5AD-4774-4AF5-B5FB-3E5144B51299}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A99B5AD-4774-4AF5-B5FB-3E5144B51299}.Release|Any CPU.Build.0 = Release|Any CPU
+		{938E4ADF-67E1-4472-9F8F-424B407C5C43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{938E4ADF-67E1-4472-9F8F-424B407C5C43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{938E4ADF-67E1-4472-9F8F-424B407C5C43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{938E4ADF-67E1-4472-9F8F-424B407C5C43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC6DFBF8-994D-49C2-A59E-16E23409B177}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC6DFBF8-994D-49C2-A59E-16E23409B177}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC6DFBF8-994D-49C2-A59E-16E23409B177}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC6DFBF8-994D-49C2-A59E-16E23409B177}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81E335BB-61FF-4F0C-856B-00ED0E15C5BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81E335BB-61FF-4F0C-856B-00ED0E15C5BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81E335BB-61FF-4F0C-856B-00ED0E15C5BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81E335BB-61FF-4F0C-856B-00ED0E15C5BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26B53F0E-B4A3-4F1D-B352-898076AE3273}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26B53F0E-B4A3-4F1D-B352-898076AE3273}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26B53F0E-B4A3-4F1D-B352-898076AE3273}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26B53F0E-B4A3-4F1D-B352-898076AE3273}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE6259B1-4354-4D46-B272-EB9F8621586F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE6259B1-4354-4D46-B272-EB9F8621586F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE6259B1-4354-4D46-B272-EB9F8621586F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE6259B1-4354-4D46-B272-EB9F8621586F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{460AD399-0D8B-46F1-B9A5-30578128CE6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{460AD399-0D8B-46F1-B9A5-30578128CE6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{460AD399-0D8B-46F1-B9A5-30578128CE6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{460AD399-0D8B-46F1-B9A5-30578128CE6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
