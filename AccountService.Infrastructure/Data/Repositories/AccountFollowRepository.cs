@@ -84,5 +84,22 @@ public class AccountFollowRepository : AbstractRepository<AccountFollow>, IAccou
             .Include(a => a.FollowedAccount.Gender)
             .FirstOrDefaultAsync(a => a.Code == code);
     }
-    
+
+    public async Task<IPaged<AccountFollow>> GetFollowersByAccountCode(int accountId, FilterData filter, CancellationToken cancellationToken)
+    {
+        return await Entity
+            .Include(a => a.FollowerAccount.Gender)
+            .Include(a => a.FollowedAccount.Gender)
+            .Where(a => a.FollowedAccountId == accountId)
+            .ToPageAsync(filter, cancellationToken);
+    }
+
+    public async Task<IPaged<AccountFollow>> GetFollowedByAccountCode(int accountId, FilterData filter, CancellationToken cancellationToken)
+    {
+        return await Entity
+            .Include(a => a.FollowerAccount.Gender)
+            .Include(a => a.FollowedAccount.Gender)
+            .Where(a => a.FollowerAccountId == accountId)
+            .ToPageAsync(filter, cancellationToken);
+    }
 }

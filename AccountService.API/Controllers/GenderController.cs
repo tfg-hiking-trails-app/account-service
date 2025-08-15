@@ -15,8 +15,8 @@ namespace AccountService.API.Controllers;
 public class GenderController : AbstractController<GenderDto, CreateGenderDto, UpdateGenderDto, 
     GenderEntityDto, CreateGenderEntityDto, UpdateGenderEntityDto>
 {
-    public GenderController(IGenderService service, IMapper mapper) 
-        : base(service, mapper)
+    public GenderController(IGenderService accountFollowService, IMapper mapper) 
+        : base(accountFollowService, mapper)
     {
     }
     

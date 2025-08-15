@@ -15,8 +15,8 @@ namespace AccountService.API.Controllers;
 public class AccountController : AbstractController<AccountDto, CreateAccountDto, UpdateAccountDto, 
     AccountEntityDto, CreateAccountEntityDto, UpdateAccountEntityDto>
 {
-    public AccountController(IAccountService service, IMapper mapper) 
-        : base(service, mapper)
+    public AccountController(IAccountService accountFollowService, IMapper mapper) 
+        : base(accountFollowService, mapper)
     {
     }
     
