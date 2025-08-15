@@ -6,7 +6,9 @@ using AccountService.Infrastructure.Data;
 using AccountService.Infrastructure.Data.Configurations.Mapping;
 using AccountService.Infrastructure.Data.Repositories;
 using Common.API.DTOs.Mapping;
+using Common.Application.Interfaces;
 using Common.Infrastructure.Data.Configuration.Mapping;
+using Common.Infrastructure.Security.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace AccountService.API.Extensions;
@@ -30,6 +32,7 @@ public static class ServiceCollectionExtension
     
     private static void AddServices(this IServiceCollection services)
     {
+        services.AddScoped<ITokenManager, TokenManager>();
         services.AddScoped<IGenderService, GenderService>();
         services.AddScoped<IAccountService, Application.Services.AccountService>();
         services.AddScoped<IAccountFollowService, AccountFollowService>();
