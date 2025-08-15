@@ -20,15 +20,15 @@ namespace AccountService.API.Controllers;
 public class AccountFollowController : AbstractController<AccountFollowDto, CreateAccountFollowDto, UpdateAccountFollowDto, 
     AccountFollowEntityDto, CreateAccountFollowEntityDto, UpdateAccountFollowEntityDto>
 {
-    private readonly IAccountFollowService _accountFollowService;
+    private readonly IAccountFollowService _service;
     private readonly IMapper _mapper;
     
     public AccountFollowController(
-        IAccountFollowService accountFollowService,
+        IAccountFollowService service,
         IMapper mapper) 
-        : base(accountFollowService, mapper)
+        : base(service, mapper)
     {
-        _accountFollowService = accountFollowService;
+        _service = service;
         _mapper = mapper;
     }
 
@@ -51,7 +51,7 @@ public class AccountFollowController : AbstractController<AccountFollowDto, Crea
         {
             FilterDto filter = new FilterDto(pageNumber, pageSize, sortField, sortDirection);
             
-            Page<AccountEntityDto> followers = await _accountFollowService.GetFollowersByAccountCode(
+            Page<AccountEntityDto> followers = await _service.GetFollowersByAccountCode(
                 accountCode, _mapper.Map<FilterEntityDto>(filter), cancellationToken);
             
             return Ok(_mapper.Map<Page<AccountDto>>(followers));
@@ -84,7 +84,7 @@ public class AccountFollowController : AbstractController<AccountFollowDto, Crea
         {
             FilterDto filter = new FilterDto(pageNumber, pageSize, sortField, sortDirection);
             
-            Page<AccountEntityDto> followed = await _accountFollowService.GetFollowedByAccountCode(
+            Page<AccountEntityDto> followed = await _service.GetFollowedByAccountCode(
                 accountCode, _mapper.Map<FilterEntityDto>(filter), cancellationToken);
             
             return Ok(_mapper.Map<Page<AccountDto>>(followed));
