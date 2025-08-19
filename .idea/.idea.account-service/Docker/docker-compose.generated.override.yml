@@ -1,0 +1,20 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  account-service:
+    build:
+      context: "C:\\Users\\ruben\\Desktop\\TFG\\App"
+      dockerfile: "account-service/AccountService.API/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/AccountService.API.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "accountservice.api:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\ruben\\Desktop\\TFG\\App\\account-service\\AccountService.API:/app:rw"
+    - "C:\\Users\\ruben\\Desktop\\TFG\\App\\account-service:/src:rw"
+    - "C:\\Users\\ruben\\.nuget\\packages:/home/app/.nuget/packages"
+    working_dir: "/app"

@@ -31,10 +31,7 @@ public class AccountFollowController : AbstractController<AccountFollowDto, Crea
         _service = service;
         _mapper = mapper;
     }
-
-    /// <summary>
-    /// Obtiene todas las cuentas que siguen a la cuenta especificada
-    /// </summary>
+    
     [HttpGet("followers/{accountCode:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -65,10 +62,29 @@ public class AccountFollowController : AbstractController<AccountFollowDto, Crea
             return BadRequest(ex.Message);
         }
     }
-
-    /// <summary>
-    /// Obtiene todas las cuentas a las que sigue la cuenta especificada
-    /// </summary>
+    
+    [HttpGet("followers/{accountCode:guid}/all")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<AccountDto>>> GetAllFollowersByAccountCode(Guid accountCode)
+    {
+        try
+        {
+            IEnumerable<AccountEntityDto> followers = await _service.GetAllFollowersByAccountCode(accountCode);
+            
+            return Ok(_mapper.Map<IEnumerable<AccountDto>>(followers));
+        }
+        catch (NotFoundEntityException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    
     [HttpGet("followed/{accountCode:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -88,6 +104,27 @@ public class AccountFollowController : AbstractController<AccountFollowDto, Crea
                 accountCode, _mapper.Map<FilterEntityDto>(filter), cancellationToken);
             
             return Ok(_mapper.Map<Page<AccountDto>>(followed));
+        }
+        catch (NotFoundEntityException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    
+    [HttpGet("followed/{accountCode:guid}/all")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<AccountDto>>> GetFollowedByAccountCode(Guid accountCode)
+    {
+        try
+        {
+            IEnumerable<AccountEntityDto> followed = await _service.GetAllFollowedByAccountCode(accountCode);
+            
+            return Ok(_mapper.Map<IEnumerable<AccountDto>>(followed));
         }
         catch (NotFoundEntityException ex)
         {

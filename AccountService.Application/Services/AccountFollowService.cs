@@ -49,6 +49,17 @@ public class AccountFollowService : AbstractService<AccountFollow, AccountFollow
         return _mapper.Map<Page<AccountEntityDto>>(result);
     }
 
+    public async Task<IEnumerable<AccountEntityDto>> GetAllFollowersByAccountCode(Guid accountCode)
+    {
+        AccountEntityDto account = await _accountService.GetByCodeAsync(accountCode);
+        
+        IEnumerable<AccountFollow> followers = await _accountFollowRepository.GetAllFollowersByAccountCode(account.Id);
+        
+        return followers
+            .Select(x => _mapper.Map<AccountEntityDto>(x.FollowerAccount))
+            .ToList();
+    }
+
     public async Task<Page<AccountEntityDto>> GetFollowedByAccountCode(Guid accountCode, 
         FilterEntityDto filter, CancellationToken cancellationToken)
     {
@@ -65,7 +76,18 @@ public class AccountFollowService : AbstractService<AccountFollow, AccountFollow
         
         return _mapper.Map<Page<AccountEntityDto>>(result);
     }
-    
+
+    public async Task<IEnumerable<AccountEntityDto>> GetAllFollowedByAccountCode(Guid accountCode)
+    {
+        AccountEntityDto account = await _accountService.GetByCodeAsync(accountCode);
+        
+        IEnumerable<AccountFollow> followed = await _accountFollowRepository.GetAllFollowedByAccountCode(account.Id);
+        
+        return followed
+            .Select(x => _mapper.Map<AccountEntityDto>(x.FollowedAccount))
+            .ToList();
+    }
+
     protected override void CheckDataValidity(CreateAccountFollowEntityDto createEntityDto)
     {
         if (createEntityDto.FollowerAccountCode.HasValue)

@@ -9,8 +9,8 @@ namespace AccountService.Application.Interfaces;
 
 public interface IAccountFollowService : IService<AccountFollowEntityDto, CreateAccountFollowEntityDto, UpdateAccountFollowEntityDto>
 {
-    Task<Page<AccountEntityDto>> GetFollowersByAccountCode(Guid accountCode, 
-        FilterEntityDto filter, CancellationToken cancellationToken);
-    Task<Page<AccountEntityDto>> GetFollowedByAccountCode(Guid accountCode, 
-        FilterEntityDto filter, CancellationToken cancellationToken);
+    Task<Page<AccountEntityDto>> GetFollowersByAccountCode(Guid accountCode, FilterEntityDto filter, CancellationToken cancellationToken);
+    Task<IEnumerable<AccountEntityDto>> GetAllFollowersByAccountCode(Guid accountCode);
+    Task<Page<AccountEntityDto>> GetFollowedByAccountCode(Guid accountCode, FilterEntityDto filter, CancellationToken cancellationToken);
+    Task<IEnumerable<AccountEntityDto>> GetAllFollowedByAccountCode(Guid accountCode);
 }
