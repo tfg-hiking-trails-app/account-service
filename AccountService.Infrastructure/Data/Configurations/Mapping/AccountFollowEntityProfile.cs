@@ -12,6 +12,9 @@ public class AccountFollowEntityProfile : Profile
     {
         CreateMap<AccountFollowEntityDto, AccountFollow>().ReverseMap();
         CreateMap<CreateAccountFollowEntityDto, AccountFollow>().ReverseMap();
-        CreateMap<UpdateAccountFollowEntityDto, AccountFollow>().ReverseMap();
+        CreateMap<UpdateAccountFollowEntityDto, AccountFollow>()
+            .ForAllMembers(opt => opt
+                .Condition((src, dest, srcMember) => srcMember != null));
+        CreateMap<AccountFollow, UpdateAccountFollowEntityDto>();
     }
 }

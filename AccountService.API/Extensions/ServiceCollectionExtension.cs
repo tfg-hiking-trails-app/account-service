@@ -7,6 +7,7 @@ using AccountService.Infrastructure.Data.Configurations.Mapping;
 using AccountService.Infrastructure.Data.Repositories;
 using Common.API.DTOs.Mapping;
 using Common.Application.Interfaces;
+using Common.Application.Services;
 using Common.Infrastructure.Data.Configuration.Mapping;
 using Common.Infrastructure.Security.Tokens;
 using Microsoft.OpenApi.Models;
@@ -36,6 +37,7 @@ public static class ServiceCollectionExtension
         services.AddScoped<IGenderService, GenderService>();
         services.AddScoped<IAccountService, Application.Services.AccountService>();
         services.AddScoped<IAccountFollowService, AccountFollowService>();
+        services.AddScoped<IImageService, ImageService>();
     }
     
     private static void AddRepositories(this IServiceCollection services)

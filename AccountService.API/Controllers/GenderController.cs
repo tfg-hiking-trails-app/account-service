@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AccountService.API.Controllers;
 
 [Route("api/[controller]")]
-public class GenderController : AbstractController<GenderDto, CreateGenderDto, UpdateGenderDto, 
+public class GenderController : AbstractCrudController<GenderDto, CreateGenderDto, UpdateGenderDto, 
     GenderEntityDto, CreateGenderEntityDto, UpdateGenderEntityDto>
 {
     public GenderController(IGenderService service, IMapper mapper) 

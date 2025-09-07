@@ -12,6 +12,9 @@ public class GenderEntityProfile : Profile
     {
         CreateMap<GenderEntityDto, Gender>().ReverseMap();
         CreateMap<CreateGenderEntityDto, Gender>().ReverseMap();
-        CreateMap<UpdateGenderEntityDto, Gender>().ReverseMap();
+        CreateMap<UpdateGenderEntityDto, Gender>()
+            .ForAllMembers(opt => opt
+                .Condition((src, dest, srcMember) => srcMember != null));
+        CreateMap<Gender, UpdateGenderEntityDto>();
     }
 }

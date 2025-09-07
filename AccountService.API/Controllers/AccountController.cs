@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AccountService.API.Controllers;
 
 [Route("api/[controller]")]
-public class AccountController : AbstractController<AccountDto, CreateAccountDto, UpdateAccountDto, 
+public class AccountController : AbstractReadController<AccountDto, CreateAccountDto, UpdateAccountDto, 
     AccountEntityDto, CreateAccountEntityDto, UpdateAccountEntityDto>
 {
     private readonly IAccountService _accountService;
@@ -44,6 +44,28 @@ public class AccountController : AbstractController<AccountDto, CreateAccountDto
             AccountEntityDto entityDto = await _accountService.GetByCodeAsync(new Guid(userCode));
 
             return Ok(_mapper.Map<AccountDto>(entityDto));
+        }
+        catch (NotFoundEntityException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    
+    [HttpPatch("{code:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<AccountDto>> Update(Guid code, [FromForm] UpdateAccountDto updateDto)
+    {
+        try
+        {
+            UpdateAccountEntityDto updateEntityDto = Mapper.Map<UpdateAccountEntityDto>(updateDto);
+
+            return Ok(await Service.UpdateAsync(code, updateEntityDto));
         }
         catch (NotFoundEntityException ex)
         {

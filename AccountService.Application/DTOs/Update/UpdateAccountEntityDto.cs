@@ -1,4 +1,6 @@
-﻿namespace AccountService.Application.DTOs.Update;
+﻿using Common.Application;
+
+namespace AccountService.Application.DTOs.Update;
 
 public record UpdateAccountEntityDto
 {
@@ -14,5 +16,5 @@ public record UpdateAccountEntityDto
     public decimal? Weight { get; set; }
     public decimal? Height { get; set; }
     public bool Private { get; set; }
-    public string? ProfilePicture { get; set; }
+    public FileEntityDto? ProfilePicture { get; set; }
 }

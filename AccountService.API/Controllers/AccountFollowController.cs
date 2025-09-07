@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AccountService.API.Controllers;
 
 [Route("api/account-follow")]
-public class AccountFollowController : AbstractController<AccountFollowDto, CreateAccountFollowDto, UpdateAccountFollowDto, 
+public class AccountFollowController : AbstractCrudController<AccountFollowDto, CreateAccountFollowDto, UpdateAccountFollowDto, 
     AccountFollowEntityDto, CreateAccountFollowEntityDto, UpdateAccountFollowEntityDto>
 {
     private readonly IAccountFollowService _service;
