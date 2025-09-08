@@ -7,4 +7,5 @@ namespace AccountService.Application.Interfaces;
 
 public interface IAccountService : IService<AccountEntityDto, CreateAccountEntityDto, UpdateAccountEntityDto>
 {
+    Task UpdateUsernameAsync(UpdateUsernameEntityDto updateUsernameEntityDto);
 }

@@ -1,14 +1,18 @@
 ﻿using AccountService.API.DTOs.Mapping;
+using AccountService.API.Workers;
 using AccountService.Application.Interfaces;
 using AccountService.Application.Services;
 using AccountService.Domain.Interfaces;
 using AccountService.Infrastructure.Data;
 using AccountService.Infrastructure.Data.Configurations.Mapping;
 using AccountService.Infrastructure.Data.Repositories;
+using AccountService.Infrastructure.Messaging.Consumer;
 using Common.API.DTOs.Mapping;
 using Common.Application.Interfaces;
 using Common.Application.Services;
+using Common.Domain.Interfaces.Messaging;
 using Common.Infrastructure.Data.Configuration.Mapping;
+using Common.Infrastructure.Messaging.Configuration;
 using Common.Infrastructure.Security.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -24,6 +28,10 @@ public static class ServiceCollectionExtension
         
         services.AddAutoMapper();
         
+        services.AddRabbitMq();
+        
+        services.AddHostedServices();
+        
         services.AddServices();
         
         services.AddRepositories();
@@ -33,6 +41,7 @@ public static class ServiceCollectionExtension
     
     private static void AddServices(this IServiceCollection services)
     {
+        services.AddScoped<IEventConsumerService, EventConsumerService>();
         services.AddScoped<ITokenManager, TokenManager>();
         services.AddScoped<IGenderService, GenderService>();
         services.AddScoped<IAccountService, Application.Services.AccountService>();
@@ -47,6 +56,11 @@ public static class ServiceCollectionExtension
         services.AddScoped<IAccountFollowRepository, AccountFollowRepository>();
     }
     
+    private static void AddHostedServices(this IServiceCollection services)
+    {
+        services.AddHostedService<Worker>();
+    }
+    
     private static void AddAutoMapper(this IServiceCollection services)
     {
         services.AddAutoMapper(
@@ -58,6 +72,17 @@ public static class ServiceCollectionExtension
             typeof(GenderEntityProfile).Assembly,
             typeof(AccountEntityProfile).Assembly,
             typeof(AccountFollowEntityProfile).Assembly);
+    }
+    
+    private static void AddRabbitMq(this IServiceCollection services)
+    {
+        // Providers
+        services.AddScoped<IRabbitMqConnectionProvider, RabbitMqConnectionProvider>();
+        services.AddScoped<IRabbitMqChannelProvider, RabbitMqChannelProvider>();
+        services.AddScoped<IRabbitMqQueueProvider, RabbitMqQueueProvider>();
+        
+        // Processors
+        services.AddScoped<IRabbitMqQueueConsumer, RabbitMqQueueConsumer>();
     }
     
     private static void AddSwaggerGen(this IServiceCollection services)

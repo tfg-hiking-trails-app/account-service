@@ -8,12 +8,14 @@ using AutoMapper;
 using Common.Application.Interfaces;
 using Common.Application.Services;
 using Common.Application.Utils;
+using Common.Domain.Exceptions;
 
 namespace AccountService.Application.Services;
 
 public class AccountService : AbstractService<Account, AccountEntityDto, CreateAccountEntityDto, UpdateAccountEntityDto>, 
     IAccountService
 {
+    private readonly IAccountRepository _accountRepository;
     private readonly IImageService _imageService;
     
     public AccountService(
@@ -22,6 +24,7 @@ public class AccountService : AbstractService<Account, AccountEntityDto, CreateA
         IImageService imageService) 
         : base(repository, mapper)
     {
+        _accountRepository = repository;
         _imageService = imageService;
     }
 
@@ -38,7 +41,19 @@ public class AccountService : AbstractService<Account, AccountEntityDto, CreateA
         
         return entity.Code;
     }
-    
+
+    public async Task UpdateUsernameAsync(UpdateUsernameEntityDto updateUsernameEntityDto)
+    {
+        Account? account = await _accountRepository.GetByUsernameAsync(updateUsernameEntityDto.OldUsername);
+
+        if (account is null)
+            throw new NotFoundEntityException(nameof(Account), "username", updateUsernameEntityDto.OldUsername);
+        
+        account.Username = updateUsernameEntityDto.NewUsername;
+
+        await _accountRepository.SaveChangesAsync();
+    }
+
     protected override void CheckDataValidity(CreateAccountEntityDto createEntityDto)
     {
         if (string.IsNullOrEmpty(createEntityDto.Username))

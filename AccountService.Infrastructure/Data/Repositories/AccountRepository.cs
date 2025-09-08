@@ -77,5 +77,22 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
             .Include(a => a.Followers)
             .FirstOrDefaultAsync(a => a.Code == code);
     }
-    
+
+    public Account? GetByUsername(string username)
+    {
+        return Entity
+            .Include(a => a.Gender)
+            .Include(a => a.Following)
+            .Include(a => a.Followers)
+            .FirstOrDefault(a => a.Username.Equals(username));
+    }
+
+    public async Task<Account?> GetByUsernameAsync(string username)
+    {
+        return await Entity
+            .Include(a => a.Gender)
+            .Include(a => a.Following)
+            .Include(a => a.Followers)
+            .FirstOrDefaultAsync(a => a.Username.Equals(username));
+    }
 }
