@@ -5,7 +5,6 @@ using AccountService.Application.Interfaces;
 using AccountService.Domain.Entities;
 using AccountService.Domain.Interfaces;
 using AutoMapper;
-using Common.Application;
 using Common.Application.Interfaces;
 using Common.Application.Services;
 using Common.Application.Utils;
@@ -33,25 +32,11 @@ public class AccountService : AbstractService<Account, AccountEntityDto, CreateA
         Mapper.Map(updateEntityDto, entity);
 
         if (updateEntityDto.ProfilePicture is not null)
-            entity.ProfilePicture = await UploadProfilePicture(updateEntityDto.ProfilePicture);
+            entity.ProfilePicture = await _imageService.UploadImage(updateEntityDto.ProfilePicture);
         
         await Repository.UpdateAsync(entity);
         
         return entity.Code;
-    }
-    
-    private async Task<string> UploadProfilePicture(FileEntityDto fileEntityDto)
-    {
-        string extension = Path.GetExtension(fileEntityDto.FileName) 
-                           ?? throw new ArgumentException("FileName is not a file");
-        
-        if (!Validator.ValidExtensionsImage.Contains(extension))
-            throw new ArgumentException("Invalid file extension");
-        
-        if (fileEntityDto.ContentType is null || !Validator.ValidContentTypeImage.Contains(fileEntityDto.ContentType))
-            throw new ArgumentException("Invalid file type");
-        
-        return await _imageService.UploadImage(fileEntityDto);
     }
     
     protected override void CheckDataValidity(CreateAccountEntityDto createEntityDto)
