@@ -34,8 +34,15 @@ public class AccountService : AbstractService<Account, AccountEntityDto, CreateA
 
         Mapper.Map(updateEntityDto, entity);
 
-        if (updateEntityDto.ProfilePicture is not null)
-            entity.ProfilePicture = await _imageService.UploadImage(updateEntityDto.ProfilePicture);
+        if (updateEntityDto.UploadImage?.Content.Length > 0)
+            entity.ProfilePicture = await _imageService.UploadImage(updateEntityDto.UploadImage);
+        else if (updateEntityDto.RemovedImage)
+        {
+            if (entity.ProfilePicture is not null)
+                await _imageService.RemoveImage(_imageService.GetPublicIdFromUrl(entity.ProfilePicture));
+            
+            entity.ProfilePicture = null;
+        }
         
         await Repository.UpdateAsync(entity);
         

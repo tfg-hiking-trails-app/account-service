@@ -16,5 +16,6 @@ public record UpdateAccountDto : UpdateBaseDto
     public decimal? Weight { get; set; }
     public decimal? Height { get; set; }
     public bool? Private { get; set; }
-    public IFormFile? ProfilePicture { get; set; }
+    public IFormFile? UploadImage { get; set; }
+    public bool RemovedImage { get; set; }
 }

@@ -16,5 +16,6 @@ public record UpdateAccountEntityDto
     public decimal? Weight { get; set; }
     public decimal? Height { get; set; }
     public bool Private { get; set; }
-    public FileEntityDto? ProfilePicture { get; set; }
+    public FileEntityDto? UploadImage { get; set; }
+    public bool RemovedImage { get; set; }
 }
