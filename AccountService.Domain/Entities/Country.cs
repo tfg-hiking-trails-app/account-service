@@ -58,7 +58,7 @@ public class Country : BaseEntity
     public string? Region { get; set; }
 
     [Column("region_id")]
-    public uint? RegionId { get; set; }
+    public int? RegionId { get; set; }
 
     [ForeignKey("RegionId")]
     public Region? RegionEntity { get; set; }
@@ -68,7 +68,7 @@ public class Country : BaseEntity
     public string? Subregion { get; set; }
 
     [Column("subregion_id")]
-    public uint? SubregionId { get; set; }
+    public int? SubregionId { get; set; }
 
     [ForeignKey("SubregionId")]
     public Subregion? SubregionEntity { get; set; }

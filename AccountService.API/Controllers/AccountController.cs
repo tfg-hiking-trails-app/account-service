@@ -1,5 +1,4 @@
 ﻿using AccountService.API.DTOs;
-using AccountService.API.DTOs.Create;
 using AccountService.API.DTOs.Update;
 using AccountService.Application.DTOs;
 using AccountService.Application.DTOs.Create;
@@ -14,8 +13,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace AccountService.API.Controllers;
 
 [Route("api/[controller]")]
-public class AccountController : AbstractReadController<AccountDto, CreateAccountDto, UpdateAccountDto, 
-    AccountEntityDto, CreateAccountEntityDto, UpdateAccountEntityDto>
+public class AccountController : AbstractReadController<AccountDto, AccountEntityDto, 
+    CreateAccountEntityDto, UpdateAccountEntityDto>
 {
     private readonly IAccountService _accountService;
     private readonly IMapper _mapper;

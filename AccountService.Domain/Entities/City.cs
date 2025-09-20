@@ -14,7 +14,7 @@ public class City : BaseEntity
     public required string Name { get; set; }
 
     [Column("state_id")]
-    public uint StateId { get; set; }
+    public int StateId { get; set; }
 
     [ForeignKey("StateId")]
     public State State { get; set; } = null!;
@@ -25,7 +25,7 @@ public class City : BaseEntity
     public required string StateCode { get; set; }
 
     [Column("country_id")]
-    public uint CountryId { get; set; }
+    public int CountryId { get; set; }
 
     [ForeignKey("CountryId")]
     public Country Country { get; set; } = null!;

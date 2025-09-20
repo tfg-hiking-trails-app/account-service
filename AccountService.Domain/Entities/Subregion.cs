@@ -17,7 +17,7 @@ public class Subregion : BaseEntity
     public string? Translations { get; set; }
 
     [Column("region_id")]
-    public uint RegionId { get; set; }
+    public int RegionId { get; set; }
 
     [ForeignKey("RegionId")]
     public Region Region { get; set; } = null!;

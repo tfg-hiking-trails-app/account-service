@@ -14,7 +14,7 @@ public class State : BaseEntity
     public required string Name { get; set; }
 
     [Column("country_id")]
-    public uint CountryId { get; set; }
+    public int CountryId { get; set; }
 
     [ForeignKey("CountryId")]
     public Country Country { get; set; } = null!;
@@ -44,7 +44,7 @@ public class State : BaseEntity
     public int? Level { get; set; }
 
     [Column("parent_id")]
-    public uint? ParentId { get; set; }
+    public int? ParentId { get; set; }
 
     [Column("native")]
     [StringLength(255)]
