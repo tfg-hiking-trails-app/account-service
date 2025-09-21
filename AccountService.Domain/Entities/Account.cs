@@ -29,22 +29,19 @@ public class Account : BaseEntity
     [Column("country_id")]
     public int? CountryId { get; set; }
     
-    [Column("country")]
-    [StringLength(100)]
+    [ForeignKey("CountryId")]
     public Country? Country { get; set; }
     
     [Column("state_id")]
     public int? StateId { get; set; }
     
-    [Column("state")]
-    [StringLength(100)]
+    [ForeignKey("StateId")]
     public State? State { get; set; }
     
     [Column("city_id")]
     public int? CityId { get; set; }
     
-    [Column("city")]
-    [StringLength(100)]
+    [ForeignKey("CityId")]
     public City? City { get; set; }
 
     [Column("biography", TypeName = "text")]

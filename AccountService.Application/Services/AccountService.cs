@@ -42,59 +42,31 @@ public class AccountService : AbstractService<Account, AccountEntityDto, CreateA
 
     public override async Task<Guid> UpdateAsync(Guid code, UpdateAccountEntityDto updateEntityDto)
     {
-        Account entity = await GetEntity(code);
+        Account account = await GetEntity(code);
+        
+        if (account is null)
+            throw new NotFoundEntityException(nameof(Account), "code", code.ToString());
 
-        Mapper.Map(updateEntityDto, entity);
+        Mapper.Map(updateEntityDto, account);
 
         if (updateEntityDto.UploadImage?.Content.Length > 0)
-            entity.ProfilePicture = await _imageService.UploadImage(updateEntityDto.UploadImage);
+            account.ProfilePicture = await _imageService.UploadImage(updateEntityDto.UploadImage);
         else if (updateEntityDto.RemovedImage)
         {
-            if (entity.ProfilePicture is not null)
-                await _imageService.RemoveImage(_imageService.GetPublicIdFromUrl(entity.ProfilePicture));
+            if (account.ProfilePicture is not null)
+                await _imageService.RemoveImage(_imageService.GetPublicIdFromUrl(account.ProfilePicture));
             
-            entity.ProfilePicture = null;
-        }
-
-        // Update gender
-        if (updateEntityDto.GenderCode is Guid genderCode && entity.Gender?.Code != genderCode)
-        {
-            Gender? gender = await _genderRepository.GetByCodeAsync(genderCode);
-            
-            if (gender is not null)
-                entity.Gender = gender;
+            account.ProfilePicture = null;
         }
         
-        // Update country
-        if (updateEntityDto.CountryCode is Guid countryCode && entity.Country?.Code != countryCode)
-        {
-            Country? country = await _countryRepository.GetByCodeAsync(countryCode);
-            
-            if (country is not null)
-                entity.Country = country;
-        }
+        UpdateGender(account, updateEntityDto.GenderCode);
+        UpdateCountry(account, updateEntityDto.CountryCode);
+        UpdateState(account, updateEntityDto.StateCode);
+        UpdateCity(account, updateEntityDto.CityCode);
         
-        // Update state
-        if (updateEntityDto.StateCode is Guid stateCode && entity.State?.Code != stateCode)
-        {
-            State? state = await _stateRepository.GetByCodeAsync(stateCode);
-            
-            if (state is not null)
-                entity.State = state;
-        }
+        await Repository.SaveChangesAsync();
         
-        // Update city
-        if (updateEntityDto.CityCode is Guid cityCode && entity.City?.Code != cityCode)
-        {
-            City? city = await _cityRepository.GetByCodeAsync(cityCode);
-            
-            if (city is not null)
-                entity.City = city;
-        }
-        
-        await Repository.UpdateAsync(entity);
-        
-        return entity.Code;
+        return account.Code;
     }
 
     public async Task UpdateUsernameAsync(UpdateUsernameEntityDto updateUsernameEntityDto)
@@ -113,9 +85,82 @@ public class AccountService : AbstractService<Account, AccountEntityDto, CreateA
     {
         if (string.IsNullOrEmpty(createEntityDto.Username))
             Validator.CheckNullArgument(createEntityDto.Username, nameof(createEntityDto.Username));
+    }
+
+    private void UpdateGender(Account account, Guid? genderCode)
+    {
+        // Delete gender
+        if (!genderCode.HasValue)
+        {
+            account.Gender = null;
+            return;
+        }
         
-        if (createEntityDto.GenderCode.HasValue)
-            Validator.CheckGuid(createEntityDto.GenderCode.Value);
+        // Assign gender
+        if (genderCode != Guid.Empty && account.Gender?.Code != genderCode)
+        {
+            Gender? gender = _genderRepository.GetByCode(genderCode.Value);
+            
+            if (gender is not null)
+                account.Gender = gender;
+        }
+    }
+    
+    private void UpdateCountry(Account account, Guid? countryCode)
+    {
+        // Delete country
+        if (!countryCode.HasValue)
+        {
+            account.Country = null;
+            return;
+        }
+        
+        // Assign country
+        if (countryCode != Guid.Empty && account.Country?.Code != countryCode)
+        {
+            Country? country = _countryRepository.GetByCode(countryCode.Value);
+            
+            if (country is not null)
+                account.Country = country;
+        }
+    }
+    
+    private void UpdateState(Account account, Guid? stateCode)
+    {
+        // Delete state
+        if (!stateCode.HasValue)
+        {
+            account.State = null;
+            return;
+        }
+        
+        // Assign state
+        if (stateCode != Guid.Empty && account.State?.Code != stateCode)
+        {
+            State? state = _stateRepository.GetByCode(stateCode.Value);
+            
+            if (state is not null)
+                account.State = state;
+        }
+    }
+    
+    private void UpdateCity(Account account, Guid? cityCode)
+    {
+        // Delete state
+        if (!cityCode.HasValue)
+        {
+            account.City = null;
+            return;
+        }
+        
+        // Assign state
+        if (cityCode != Guid.Empty && account.City?.Code != cityCode)
+        {
+            City? city = _cityRepository.GetByCode(cityCode.Value);
+            
+            if (city is not null)
+                account.City = city;
+        }
     }
     
 }

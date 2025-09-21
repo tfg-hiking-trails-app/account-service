@@ -60,7 +60,6 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
     public override Account? Get(int id)
     {
         return Entity
-            .AsNoTracking()
             .Include(a => a.Gender)
             .Include(a => a.Country)
             .Include(a => a.State)
@@ -74,7 +73,6 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
     public override async Task<Account?> GetAsync(int id)
     {
         return await Entity
-            .AsNoTracking()
             .Include(a => a.Gender)
             .Include(a => a.Country)
             .Include(a => a.State)
@@ -88,7 +86,6 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
     public override Account? GetByCode(Guid code)
     {
         return Entity
-            .AsNoTracking()
             .Include(a => a.Gender)
             .Include(a => a.Country)
             .Include(a => a.State)
@@ -102,7 +99,6 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
     public override async Task<Account?> GetByCodeAsync(Guid code)
     {
         return await Entity
-            .AsNoTracking()
             .Include(a => a.Gender)
             .Include(a => a.Country)
             .Include(a => a.State)
@@ -116,7 +112,6 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
     public Account? GetByUsername(string username)
     {
         return Entity
-            .AsNoTracking()
             .Include(a => a.Gender)
             .Include(a => a.Country)
             .Include(a => a.State)
@@ -130,7 +125,6 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
     public async Task<Account?> GetByUsernameAsync(string username)
     {
         return await Entity
-            .AsNoTracking()
             .Include(a => a.Gender)
             .Include(a => a.Country)
             .Include(a => a.State)

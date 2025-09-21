@@ -12,9 +12,6 @@ public class AccountEntityProfile : Profile
     {
         CreateMap<AccountEntityDto, Account>().ReverseMap();
         CreateMap<CreateAccountEntityDto, Account>().ReverseMap();
-        CreateMap<UpdateAccountEntityDto, Account>()
-            .ForAllMembers(opt => opt
-                .Condition((src, dest, srcMember) => srcMember != null));
-        CreateMap<Account, UpdateAccountEntityDto>();
+        CreateMap<UpdateAccountEntityDto, Account>().ReverseMap();
     }
 }
