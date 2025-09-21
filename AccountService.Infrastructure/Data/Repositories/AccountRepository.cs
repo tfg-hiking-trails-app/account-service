@@ -39,7 +39,8 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
             .Include(a => a.Following)
             .Include(a => a.Followers)
             .AsSplitQuery()
-            .ToListAsync();    }
+            .ToListAsync();
+    }
     
     public override async Task<IPaged<Account>> GetPagedAsync(
         FilterData filter, 
@@ -134,4 +135,26 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
             .AsSplitQuery()
             .FirstOrDefaultAsync(a => a.Username.Equals(username));
     }
+
+    public async Task<IEnumerable<Account>> SearcherAsync(string search, int numberResults)
+    {
+        return await Entity
+            .AsNoTracking()
+            .Include(a => a.Gender)
+            .Include(a => a.Country)
+            .Include(a => a.State)
+            .Include(a => a.City)
+            .Include(a => a.Following)
+            .Include(a => a.Followers)
+            .AsSplitQuery()
+            .Where(a => a.Username.ToLower().Contains(search.ToLower()) ||
+                        (a.FirstName != null && a.FirstName.ToLower().Contains(search.ToLower())) ||
+                        (a.LastName != null && a.LastName.ToLower().Contains(search.ToLower())))
+            .OrderBy(a => a.Username)
+            .ThenBy(a => a.FirstName)
+            .ThenBy(a => a.LastName)
+            .Take(numberResults)
+            .ToListAsync();
+    }
+    
 }

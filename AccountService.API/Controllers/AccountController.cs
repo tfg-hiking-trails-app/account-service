@@ -75,5 +75,21 @@ public class AccountController : AbstractReadController<AccountDto, AccountEntit
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpGet("searcher")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public virtual async Task<ActionResult<IEnumerable<AccountDto>>> Searcher(
+        [FromQuery] string search,
+        [FromQuery] int numberResults)
+    {
+        if (string.IsNullOrWhiteSpace(search))
+            return BadRequest("search is empty");
+
+        IEnumerable<AccountEntityDto> result = await _accountService.SearcherAsync(search, numberResults);
+
+        return Ok(_mapper.Map<IEnumerable<AccountDto>>(result));
+    }
     
 }
