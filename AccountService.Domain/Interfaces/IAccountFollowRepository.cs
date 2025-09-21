@@ -6,9 +6,12 @@ namespace AccountService.Domain.Interfaces;
 
 public interface IAccountFollowRepository : IRepository<AccountFollow>
 {
-    Task<IPaged<AccountFollow>> GetFollowersByAccountCode(int accountId, FilterData filter, CancellationToken cancellationToken);
-    Task<IEnumerable<AccountFollow>> GetAllFollowersByAccountCode(int accountId);
+    Task<IPaged<AccountFollow>> GetFollowersByAccount(int accountId, FilterData filter, CancellationToken cancellationToken);
+    Task<IEnumerable<AccountFollow>> GetAllFollowersByAccount(int accountId);
     
-    Task<IPaged<AccountFollow>> GetFollowedByAccountCode(int accountId, FilterData filter, CancellationToken cancellationToken);
-    Task<IEnumerable<AccountFollow>> GetAllFollowedByAccountCode(int accountId);
+    Task<IPaged<AccountFollow>> GetFollowedByAccount(int accountId, FilterData filter, CancellationToken cancellationToken);
+    Task<IEnumerable<AccountFollow>> GetAllFollowedByAccount(int accountId);
+
+    Task<int> GetFollowersCountByAccount(int accountId);
+    Task<int> GetFollowedCountByAccount(int accountId);
 }

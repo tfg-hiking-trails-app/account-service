@@ -37,7 +37,7 @@ public class AccountFollowService : AbstractService<AccountFollow, AccountFollow
     {
         AccountEntityDto account = await _accountService.GetByCodeAsync(accountCode);
         
-        IPaged<AccountFollow> followers = await _accountFollowRepository.GetFollowersByAccountCode(account.Id, 
+        IPaged<AccountFollow> followers = await _accountFollowRepository.GetFollowersByAccount(account.Id, 
             _mapper.Map<FilterData>(filter), cancellationToken);
         
         Page<AccountEntityDto> result = new Page<AccountEntityDto>(
@@ -53,7 +53,7 @@ public class AccountFollowService : AbstractService<AccountFollow, AccountFollow
     {
         AccountEntityDto account = await _accountService.GetByCodeAsync(accountCode);
         
-        IEnumerable<AccountFollow> followers = await _accountFollowRepository.GetAllFollowersByAccountCode(account.Id);
+        IEnumerable<AccountFollow> followers = await _accountFollowRepository.GetAllFollowersByAccount(account.Id);
         
         return followers
             .Select(x => _mapper.Map<AccountEntityDto>(x.FollowerAccount))
@@ -65,7 +65,7 @@ public class AccountFollowService : AbstractService<AccountFollow, AccountFollow
     {
         AccountEntityDto account = await _accountService.GetByCodeAsync(accountCode);
         
-        IPaged<AccountFollow> followed = await _accountFollowRepository.GetFollowedByAccountCode(account.Id, 
+        IPaged<AccountFollow> followed = await _accountFollowRepository.GetFollowedByAccount(account.Id, 
             _mapper.Map<FilterData>(filter), cancellationToken);
         
         Page<AccountEntityDto> result = new Page<AccountEntityDto>(
@@ -81,11 +81,25 @@ public class AccountFollowService : AbstractService<AccountFollow, AccountFollow
     {
         AccountEntityDto account = await _accountService.GetByCodeAsync(accountCode);
         
-        IEnumerable<AccountFollow> followed = await _accountFollowRepository.GetAllFollowedByAccountCode(account.Id);
+        IEnumerable<AccountFollow> followed = await _accountFollowRepository.GetAllFollowedByAccount(account.Id);
         
         return followed
             .Select(x => _mapper.Map<AccountEntityDto>(x.FollowedAccount))
             .ToList();
+    }
+
+    public async Task<int> GetFollowersCountByAccountCode(Guid accountCode)
+    {
+        AccountEntityDto account = await _accountService.GetByCodeAsync(accountCode);
+        
+        return await _accountFollowRepository.GetFollowersCountByAccount(account.Id);
+    }
+
+    public async Task<int> GetFollowedCountByAccountCode(Guid accountCode)
+    {
+        AccountEntityDto account = await _accountService.GetByCodeAsync(accountCode);
+        
+        return await _accountFollowRepository.GetFollowedCountByAccount(account.Id);
     }
 
     protected override void CheckDataValidity(CreateAccountFollowEntityDto createEntityDto)

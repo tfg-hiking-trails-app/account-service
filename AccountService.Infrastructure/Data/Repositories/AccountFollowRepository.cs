@@ -85,7 +85,7 @@ public class AccountFollowRepository : AbstractRepository<AccountFollow>, IAccou
             .FirstOrDefaultAsync(a => a.Code == code);
     }
 
-    public async Task<IPaged<AccountFollow>> GetFollowersByAccountCode(int accountId, FilterData filter, CancellationToken cancellationToken)
+    public async Task<IPaged<AccountFollow>> GetFollowersByAccount(int accountId, FilterData filter, CancellationToken cancellationToken)
     {
         return await Entity
             .Include(a => a.FollowerAccount.Gender)
@@ -94,7 +94,7 @@ public class AccountFollowRepository : AbstractRepository<AccountFollow>, IAccou
             .ToPageAsync(filter, cancellationToken);
     }
 
-    public async Task<IEnumerable<AccountFollow>> GetAllFollowersByAccountCode(int accountId)
+    public async Task<IEnumerable<AccountFollow>> GetAllFollowersByAccount(int accountId)
     {
         return await Entity
             .Include(a => a.FollowerAccount.Gender)
@@ -103,7 +103,7 @@ public class AccountFollowRepository : AbstractRepository<AccountFollow>, IAccou
             .ToListAsync();
     }
 
-    public async Task<IPaged<AccountFollow>> GetFollowedByAccountCode(int accountId, FilterData filter, CancellationToken cancellationToken)
+    public async Task<IPaged<AccountFollow>> GetFollowedByAccount(int accountId, FilterData filter, CancellationToken cancellationToken)
     {
         return await Entity
             .Include(a => a.FollowerAccount.Gender)
@@ -112,12 +112,30 @@ public class AccountFollowRepository : AbstractRepository<AccountFollow>, IAccou
             .ToPageAsync(filter, cancellationToken);
     }
 
-    public async Task<IEnumerable<AccountFollow>> GetAllFollowedByAccountCode(int accountId)
+    public async Task<IEnumerable<AccountFollow>> GetAllFollowedByAccount(int accountId)
     {
         return await Entity
             .Include(a => a.FollowerAccount.Gender)
             .Include(a => a.FollowedAccount.Gender)
             .Where(a => a.FollowerAccountId == accountId)
             .ToListAsync();
+    }
+
+    public async Task<int> GetFollowersCountByAccount(int accountId)
+    {
+        return await Entity
+            .Include(a => a.FollowerAccount.Gender)
+            .Include(a => a.FollowedAccount.Gender)
+            .Where(a => a.FollowedAccountId == accountId)
+            .CountAsync();
+    }
+
+    public async Task<int> GetFollowedCountByAccount(int accountId)
+    {
+        return await Entity
+            .Include(a => a.FollowerAccount.Gender)
+            .Include(a => a.FollowedAccount.Gender)
+            .Where(a => a.FollowerAccountId == accountId)
+            .CountAsync();
     }
 }

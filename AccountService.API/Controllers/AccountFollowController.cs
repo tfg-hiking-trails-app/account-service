@@ -118,13 +118,53 @@ public class AccountFollowController : AbstractCrudController<AccountFollowDto, 
     [HttpGet("followed/{accountCode:guid}/all")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<IEnumerable<AccountDto>>> GetFollowedByAccountCode(Guid accountCode)
+    public async Task<ActionResult<IEnumerable<AccountDto>>> GetAllFollowedByAccountCode(Guid accountCode)
     {
         try
         {
             IEnumerable<AccountEntityDto> followed = await _service.GetAllFollowedByAccountCode(accountCode);
             
             return Ok(_mapper.Map<IEnumerable<AccountDto>>(followed));
+        }
+        catch (NotFoundEntityException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpGet("followers/{accountCode:guid}/count")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<int>> GetFollowersCountByAccountCode(Guid accountCode)
+    {
+        try
+        {
+            return Ok(await _service.GetFollowersCountByAccountCode(accountCode));
+        }
+        catch (NotFoundEntityException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    
+    [HttpGet("followed/{accountCode:guid}/count")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<int>> GetFollowedCountByAccountCode(Guid accountCode)
+    {
+        try
+        {
+            return Ok(await _service.GetFollowedCountByAccountCode(accountCode));
         }
         catch (NotFoundEntityException ex)
         {

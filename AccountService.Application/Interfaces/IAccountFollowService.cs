@@ -13,4 +13,6 @@ public interface IAccountFollowService : IService<AccountFollowEntityDto, Create
     Task<IEnumerable<AccountEntityDto>> GetAllFollowersByAccountCode(Guid accountCode);
     Task<Page<AccountEntityDto>> GetFollowedByAccountCode(Guid accountCode, FilterEntityDto filter, CancellationToken cancellationToken);
     Task<IEnumerable<AccountEntityDto>> GetAllFollowedByAccountCode(Guid accountCode);
+    Task<int> GetFollowersCountByAccountCode(Guid accountCode);
+    Task<int> GetFollowedCountByAccountCode(Guid accountCode);
 }
