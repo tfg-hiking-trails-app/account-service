@@ -106,4 +106,5 @@ public class Country : BaseEntity
     public string? WikiDataId { get; set; }
     
     public virtual ICollection<State> States { get; set; } = new List<State>();
+    public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
 }

@@ -10,9 +10,9 @@ public record CreateAccountDto : CreateBaseDto
     public required string Username { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
-    public string? City { get; set; }
-    public string? State { get; set; }
-    public string? Country { get; set; }
+    public Guid? CountryCode { get; set; }
+    public Guid? StateCode { get; set; }
+    public Guid? CityCode { get; set; }
     public string? Biography { get; set; }
     public DateOnly? DateOfBirth { get; set; }
     public decimal? Weight { get; set; }

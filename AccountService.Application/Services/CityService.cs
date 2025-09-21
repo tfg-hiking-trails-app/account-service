@@ -21,16 +21,16 @@ public class CityService : AbstractService<City, CityEntityDto, CreateCityEntity
         _cityRepository = repository;
     }
 
-    public IEnumerable<CityEntityDto> GetAllByState(int stateId)
+    public IEnumerable<CityEntityDto> GetAllByState(Guid stateCode)
     {
-        IEnumerable<City> result = _cityRepository.GetAllByState(stateId);
+        IEnumerable<City> result = _cityRepository.GetAllByState(stateCode);
         
         return Mapper.Map<IEnumerable<CityEntityDto>>(result);
     }
 
-    public async Task<IEnumerable<CityEntityDto>> GetAllByStateAsync(int stateId)
+    public async Task<IEnumerable<CityEntityDto>> GetAllByStateAsync(Guid stateCode)
     {
-        IEnumerable<City> result =  await _cityRepository.GetAllByStateAsync(stateId);
+        IEnumerable<City> result =  await _cityRepository.GetAllByStateAsync(stateCode);
         
         return Mapper.Map<IEnumerable<CityEntityDto>>(result);
     }

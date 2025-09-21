@@ -71,22 +71,22 @@ public class CityRepository : AbstractRepository<City>, ICityRepository
             .FirstOrDefaultAsync(c => c.Code == code);
     }
 
-    public IEnumerable<City> GetAllByState(int stateId)
+    public IEnumerable<City> GetAllByState(Guid stateCode)
     {
         return Entity
             .AsNoTracking()
-            .Where(c => c.StateId == stateId)
+            .Where(c => c.State.Code == stateCode)
             .Include(c => c.State)
             .Include(c => c.Country)
             .AsSplitQuery()
             .ToList();
     }
 
-    public async Task<IEnumerable<City>> GetAllByStateAsync(int stateId)
+    public async Task<IEnumerable<City>> GetAllByStateAsync(Guid stateCode)
     {
         return await Entity
             .AsNoTracking()
-            .Where(c => c.StateId == stateId)
+            .Where(c => c.State.Code == stateCode)
             .Include(c => c.State)
             .Include(c => c.Country)
             .AsSplitQuery()

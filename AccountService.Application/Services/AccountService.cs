@@ -16,15 +16,27 @@ public class AccountService : AbstractService<Account, AccountEntityDto, CreateA
     IAccountService
 {
     private readonly IAccountRepository _accountRepository;
+    private readonly IGenderRepository _genderRepository;
+    private readonly ICountryRepository _countryRepository;
+    private readonly IStateRepository _stateRepository;
+    private readonly ICityRepository _cityRepository;
     private readonly IImageService _imageService;
     
     public AccountService(
-        IAccountRepository repository, 
+        IAccountRepository repository,
+        IGenderRepository genderRepository,
+        ICountryRepository countryRepository,
+        IStateRepository stateRepository,
+        ICityRepository cityRepository,
         IMapper mapper,
         IImageService imageService) 
         : base(repository, mapper)
     {
         _accountRepository = repository;
+        _genderRepository = genderRepository;
+        _countryRepository = countryRepository;
+        _stateRepository = stateRepository;
+        _cityRepository = cityRepository;
         _imageService = imageService;
     }
 
@@ -42,6 +54,42 @@ public class AccountService : AbstractService<Account, AccountEntityDto, CreateA
                 await _imageService.RemoveImage(_imageService.GetPublicIdFromUrl(entity.ProfilePicture));
             
             entity.ProfilePicture = null;
+        }
+
+        // Update gender
+        if (updateEntityDto.GenderCode is Guid genderCode && entity.Gender?.Code != genderCode)
+        {
+            Gender? gender = await _genderRepository.GetByCodeAsync(genderCode);
+            
+            if (gender is not null)
+                entity.Gender = gender;
+        }
+        
+        // Update country
+        if (updateEntityDto.CountryCode is Guid countryCode && entity.Country?.Code != countryCode)
+        {
+            Country? country = await _countryRepository.GetByCodeAsync(countryCode);
+            
+            if (country is not null)
+                entity.Country = country;
+        }
+        
+        // Update state
+        if (updateEntityDto.StateCode is Guid stateCode && entity.State?.Code != stateCode)
+        {
+            State? state = await _stateRepository.GetByCodeAsync(stateCode);
+            
+            if (state is not null)
+                entity.State = state;
+        }
+        
+        // Update city
+        if (updateEntityDto.CityCode is Guid cityCode && entity.City?.Code != cityCode)
+        {
+            City? city = await _cityRepository.GetByCodeAsync(cityCode);
+            
+            if (city is not null)
+                entity.City = city;
         }
         
         await Repository.UpdateAsync(entity);

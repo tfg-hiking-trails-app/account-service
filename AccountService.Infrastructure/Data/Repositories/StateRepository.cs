@@ -72,11 +72,11 @@ public class StateRepository : AbstractRepository<State>, IStateRepository
             .FirstOrDefaultAsync(s => s.Code == code);
     }
 
-    public IEnumerable<State> GetAllByCountry(int countryId)
+    public IEnumerable<State> GetAllByCountry(Guid countryCode)
     {
         return Entity
             .AsNoTracking()
-            .Where(s => s.CountryId == countryId && s.Cities.Any())
+            .Where(s => s.Country.Code == countryCode && s.Cities.Any())
             .Include(s => s.Country)
             .Include(s => s.Cities)
             .AsSplitQuery()
@@ -84,11 +84,11 @@ public class StateRepository : AbstractRepository<State>, IStateRepository
             .ToList();
     }
 
-    public async Task<IEnumerable<State>> GetAllByCountryAsync(int countryId)
+    public async Task<IEnumerable<State>> GetAllByCountryAsync(Guid countryCode)
     {
         return await Entity
             .AsNoTracking()
-            .Where(s => s.CountryId == countryId && s.Cities.Any())
+            .Where(s => s.Country.Code == countryCode && s.Cities.Any())
             .Include(s => s.Country)
             .Include(s => s.Cities)
             .AsSplitQuery()

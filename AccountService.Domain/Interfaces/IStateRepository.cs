@@ -5,7 +5,7 @@ namespace AccountService.Domain.Interfaces;
 
 public interface IStateRepository : IRepository<State>
 {
-    IEnumerable<State> GetAllByCountry(int countryId);
+    IEnumerable<State> GetAllByCountry(Guid countryCode);
     
-    Task<IEnumerable<State>> GetAllByCountryAsync(int countryId);
+    Task<IEnumerable<State>> GetAllByCountryAsync(Guid countryCode);
 }

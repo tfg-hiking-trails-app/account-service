@@ -54,4 +54,6 @@ public class City : BaseEntity
     [Column("wikiDataId")]
     [StringLength(255)]
     public string? WikiDataId { get; set; }
+    
+    public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
 }

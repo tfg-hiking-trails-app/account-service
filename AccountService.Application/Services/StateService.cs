@@ -21,16 +21,16 @@ public class StateService : AbstractService<State, StateEntityDto, CreateStateEn
         _repository = repository;
     }
     
-    public IEnumerable<StateEntityDto> GetAllByCountry(int countryId)
+    public IEnumerable<StateEntityDto> GetAllByCountry(Guid countryCode)
     {
-        IEnumerable<State> result = _repository.GetAllByCountry(countryId);
+        IEnumerable<State> result = _repository.GetAllByCountry(countryCode);
         
         return Mapper.Map<IEnumerable<StateEntityDto>>(result);
     }
 
-    public async Task<IEnumerable<StateEntityDto>> GetAllByCountryAsync(int countryId)
+    public async Task<IEnumerable<StateEntityDto>> GetAllByCountryAsync(Guid countryCode)
     {
-        IEnumerable<State> result =  await _repository.GetAllByCountryAsync(countryId);
+        IEnumerable<State> result =  await _repository.GetAllByCountryAsync(countryCode);
         
         return Mapper.Map<IEnumerable<StateEntityDto>>(result);
     }

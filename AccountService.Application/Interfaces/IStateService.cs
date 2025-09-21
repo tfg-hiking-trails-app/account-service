@@ -7,7 +7,7 @@ namespace AccountService.Application.Interfaces;
 
 public interface IStateService : IService<StateEntityDto, CreateStateEntityDto, UpdateStateEntityDto>
 {
-    IEnumerable<StateEntityDto> GetAllByCountry(int countryId);
+    IEnumerable<StateEntityDto> GetAllByCountry(Guid countryCode);
     
-    Task<IEnumerable<StateEntityDto>> GetAllByCountryAsync(int countryId);
+    Task<IEnumerable<StateEntityDto>> GetAllByCountryAsync(Guid countryCode);
 }

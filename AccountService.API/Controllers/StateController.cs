@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using AccountService.API.DTOs;
+﻿using AccountService.API.DTOs;
 using AccountService.Application.DTOs;
 using AccountService.Application.DTOs.Create;
 using AccountService.Application.DTOs.Update;
@@ -23,13 +22,11 @@ public class StateController : AbstractReadController<StateDto, StateEntityDto,
         _stateService = service;
     }
     
-    [HttpGet("country/{countryId:int}/all/summary")]
+    [HttpGet("country/{countryCode:guid}/all/summary")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<StateSummaryDto>>> GetAllSummaryByCountry(
-        [FromRoute][Range(1, int.MaxValue)] 
-        int countryId)
+    public async Task<ActionResult<IEnumerable<StateSummaryDto>>> GetAllSummaryByCountry(Guid countryCode)
     {
-        IEnumerable<StateEntityDto> list = await _stateService.GetAllByCountryAsync(countryId);
+        IEnumerable<StateEntityDto> list = await _stateService.GetAllByCountryAsync(countryCode);
         
         return Ok(Mapper.Map<IEnumerable<StateSummaryDto>>(list));
     }

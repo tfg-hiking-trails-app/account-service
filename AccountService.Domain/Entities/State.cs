@@ -69,4 +69,5 @@ public class State : BaseEntity
     public string? WikiDataId { get; set; }
 
     public virtual ICollection<City> Cities { get; set; } = new List<City>();
+    public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
 }
