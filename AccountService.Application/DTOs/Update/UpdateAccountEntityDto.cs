@@ -5,7 +5,6 @@ namespace AccountService.Application.DTOs.Update;
 public record UpdateAccountEntityDto
 {
     public Guid? GenderCode { get; set; }
-    public string? Username { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public Guid? CountryCode { get; set; }
