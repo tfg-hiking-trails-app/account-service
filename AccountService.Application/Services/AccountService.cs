@@ -20,7 +20,7 @@ public class AccountService : AbstractService<Account, AccountEntityDto, CreateA
     private readonly ICountryRepository _countryRepository;
     private readonly IStateRepository _stateRepository;
     private readonly ICityRepository _cityRepository;
-    private readonly IImageService _imageService;
+    private readonly IUploadImageService _uploadImageService;
     
     public AccountService(
         IAccountRepository repository,
@@ -29,7 +29,7 @@ public class AccountService : AbstractService<Account, AccountEntityDto, CreateA
         IStateRepository stateRepository,
         ICityRepository cityRepository,
         IMapper mapper,
-        IImageService imageService) 
+        IUploadImageService uploadImageService) 
         : base(repository, mapper)
     {
         _accountRepository = repository;
@@ -37,7 +37,7 @@ public class AccountService : AbstractService<Account, AccountEntityDto, CreateA
         _countryRepository = countryRepository;
         _stateRepository = stateRepository;
         _cityRepository = cityRepository;
-        _imageService = imageService;
+        _uploadImageService = uploadImageService;
     }
 
     public override async Task<Guid> UpdateAsync(Guid code, UpdateAccountEntityDto updateEntityDto)
@@ -50,11 +50,11 @@ public class AccountService : AbstractService<Account, AccountEntityDto, CreateA
         Mapper.Map(updateEntityDto, account);
 
         if (updateEntityDto.UploadImage?.Content.Length > 0)
-            account.ProfilePicture = await _imageService.UploadImage(updateEntityDto.UploadImage);
+            account.ProfilePicture = await _uploadImageService.UploadImage(updateEntityDto.UploadImage);
         else if (updateEntityDto.RemovedImage)
         {
             if (account.ProfilePicture is not null)
-                await _imageService.RemoveImage(_imageService.GetPublicIdFromUrl(account.ProfilePicture));
+                await _uploadImageService.RemoveImage(_uploadImageService.GetPublicIdFromUrl(account.ProfilePicture));
             
             account.ProfilePicture = null;
         }

@@ -46,7 +46,7 @@ public static class ServiceCollectionExtension
         services.AddScoped<IGenderService, GenderService>();
         services.AddScoped<IAccountService, Application.Services.AccountService>();
         services.AddScoped<IAccountFollowService, AccountFollowService>();
-        services.AddScoped<IImageService, ImageService>();
+        services.AddScoped<IUploadImageService, UploadImageService>();
         services.AddScoped<IRegionService, RegionService>();
         services.AddScoped<ISubregionService, SubregionService>();
         services.AddScoped<ICountryService, CountryService>();
