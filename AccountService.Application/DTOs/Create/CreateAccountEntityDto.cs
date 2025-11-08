@@ -17,6 +17,5 @@ public record CreateAccountEntityDto : CreateBaseEntityDto
     public DateOnly? DateOfBirth { get; set; }
     public decimal? Weight { get; set; }
     public decimal? Height { get; set; }
-    public bool Private { get; set; }
     public string? ProfilePicture { get; set; }
 }

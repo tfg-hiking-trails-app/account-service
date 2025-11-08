@@ -55,10 +55,6 @@ public class Account : BaseEntity
 
     [Column("height", TypeName = "decimal(5,2)")]
     public decimal? Height { get; set; }
-    
-    [Column("private")]
-    [DefaultValue(false)]
-    public bool Private { get; set; }
 
     [Column("profile_picture")]
     [StringLength(255)]

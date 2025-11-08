@@ -69,9 +69,6 @@ public class AccountConfiguration : EntityConfiguration<Account>
             .HasColumnName("height")
             .HasColumnType("decimal(5,2)");
 
-        builder.Property(a => a.Private)
-            .HasColumnName("private");
-
         builder.Property(a => a.ProfilePicture)
             .HasMaxLength(255)
             .HasColumnName("profile_picture");

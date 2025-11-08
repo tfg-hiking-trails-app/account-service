@@ -14,7 +14,6 @@ public record UpdateAccountDto : UpdateBaseDto
     public DateOnly? DateOfBirth { get; set; }
     public decimal? Weight { get; set; }
     public decimal? Height { get; set; }
-    public bool? Private { get; set; }
     public IFormFile? UploadImage { get; set; }
     public bool RemovedImage { get; set; }
 }
