@@ -47,11 +47,6 @@ public static class ServiceCollectionExtension
         services.AddScoped<IAccountService, Application.Services.AccountService>();
         services.AddScoped<IAccountFollowService, AccountFollowService>();
         services.AddScoped<IUploadImageService, UploadImageService>();
-        services.AddScoped<IRegionService, RegionService>();
-        services.AddScoped<ISubregionService, SubregionService>();
-        services.AddScoped<ICountryService, CountryService>();
-        services.AddScoped<IStateService, StateService>();
-        services.AddScoped<ICityService, CityService>();
     }
     
     private static void AddRepositories(this IServiceCollection services)
@@ -59,11 +54,6 @@ public static class ServiceCollectionExtension
         services.AddScoped<IGenderRepository, GenderRepository>();
         services.AddScoped<IAccountRepository, AccountRepository>();
         services.AddScoped<IAccountFollowRepository, AccountFollowRepository>();
-        services.AddScoped<IRegionRepository, RegionRepository>();
-        services.AddScoped<ISubregionRepository, SubregionRepository>();
-        services.AddScoped<ICountryRepository, CountryRepository>();
-        services.AddScoped<IStateRepository, StateRepository>();
-        services.AddScoped<ICityRepository, CityRepository>();
     }
     
     private static void AddHostedServices(this IServiceCollection services)
@@ -78,19 +68,9 @@ public static class ServiceCollectionExtension
             typeof(GenderProfile).Assembly,
             typeof(AccountProfile).Assembly,
             typeof(AccountFollowProfile).Assembly,
-            typeof(RegionProfile).Assembly,
-            typeof(SubregionProfile).Assembly,
-            typeof(CountryProfile).Assembly,
-            typeof(StateProfile).Assembly,
-            typeof(CityProfile).Assembly,
             typeof(CommonEntityProfile).Assembly,
             typeof(GenderEntityProfile).Assembly,
             typeof(AccountEntityProfile).Assembly,
-            typeof(RegionEntityProfile).Assembly,
-            typeof(SubregionEntityProfile).Assembly,
-            typeof(CountryEntityProfile).Assembly,
-            typeof(StateEntityProfile).Assembly,
-            typeof(CityEntityProfile).Assembly,
             typeof(AccountFollowEntityProfile).Assembly);
     }
     

@@ -33,26 +33,17 @@ public class AccountConfiguration : EntityConfiguration<Account>
             .HasMaxLength(50)
             .HasColumnName("last_name");
         
-        builder.HasOne(a => a.Country)
-            .WithMany(g => g.Accounts)
-            .HasForeignKey(a => a.CountryId);
+        builder.Property(a => a.CountryCode)
+            .HasMaxLength(50)
+            .HasColumnName("country_code");
         
-        builder.Property(a => a.CountryId)
-            .HasColumnName("country_id");
+        builder.Property(a => a.StateCode)
+            .HasMaxLength(50)
+            .HasColumnName("state_code");
         
-        builder.HasOne(a => a.State)
-            .WithMany(g => g.Accounts)
-            .HasForeignKey(a => a.StateId);
-        
-        builder.Property(a => a.StateId)
-            .HasColumnName("state_id");
-        
-        builder.HasOne(a => a.City)
-            .WithMany(g => g.Accounts)
-            .HasForeignKey(a => a.CityId);
-        
-        builder.Property(a => a.CityId)
-            .HasColumnName("city_id");
+        builder.Property(a => a.CityCode)
+            .HasMaxLength(50)
+            .HasColumnName("city_code");
         
         builder.Property(a => a.Biography)
             .HasColumnName("biography");

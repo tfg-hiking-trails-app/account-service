@@ -19,9 +19,6 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
         return Entity
             .AsNoTracking()
             .Include(a => a.Gender)
-            .Include(a => a.Country)
-            .Include(a => a.State)
-            .Include(a => a.City)
             .Include(a => a.Following)
             .Include(a => a.Followers)
             .AsSplitQuery()
@@ -33,9 +30,6 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
         return await Entity
             .AsNoTracking()
             .Include(a => a.Gender)
-            .Include(a => a.Country)
-            .Include(a => a.State)
-            .Include(a => a.City)
             .Include(a => a.Following)
             .Include(a => a.Followers)
             .AsSplitQuery()
@@ -49,9 +43,6 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
         return await Entity
             .AsNoTracking()
             .Include(a => a.Gender)
-            .Include(a => a.Country)
-            .Include(a => a.State)
-            .Include(a => a.City)
             .Include(a => a.Following)
             .Include(a => a.Followers)
             .AsSplitQuery()
@@ -62,9 +53,6 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
     {
         return Entity
             .Include(a => a.Gender)
-            .Include(a => a.Country)
-            .Include(a => a.State)
-            .Include(a => a.City)
             .Include(a => a.Following)
             .Include(a => a.Followers)
             .AsSplitQuery()
@@ -75,9 +63,6 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
     {
         return await Entity
             .Include(a => a.Gender)
-            .Include(a => a.Country)
-            .Include(a => a.State)
-            .Include(a => a.City)
             .Include(a => a.Following)
             .Include(a => a.Followers)
             .AsSplitQuery()
@@ -88,9 +73,6 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
     {
         return Entity
             .Include(a => a.Gender)
-            .Include(a => a.Country)
-            .Include(a => a.State)
-            .Include(a => a.City)
             .Include(a => a.Following)
             .Include(a => a.Followers)
             .AsSplitQuery()
@@ -101,9 +83,6 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
     {
         return await Entity
             .Include(a => a.Gender)
-            .Include(a => a.Country)
-            .Include(a => a.State)
-            .Include(a => a.City)
             .Include(a => a.Following)
             .Include(a => a.Followers)
             .AsSplitQuery()
@@ -114,9 +93,6 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
     {
         return Entity
             .Include(a => a.Gender)
-            .Include(a => a.Country)
-            .Include(a => a.State)
-            .Include(a => a.City)
             .Include(a => a.Following)
             .Include(a => a.Followers)
             .AsSplitQuery()
@@ -127,9 +103,6 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
     {
         return await Entity
             .Include(a => a.Gender)
-            .Include(a => a.Country)
-            .Include(a => a.State)
-            .Include(a => a.City)
             .Include(a => a.Following)
             .Include(a => a.Followers)
             .AsSplitQuery()
@@ -141,9 +114,6 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
         return await Entity
             .AsNoTracking()
             .Include(a => a.Gender)
-            .Include(a => a.Country)
-            .Include(a => a.State)
-            .Include(a => a.City)
             .Include(a => a.Following)
             .Include(a => a.Followers)
             .AsSplitQuery()

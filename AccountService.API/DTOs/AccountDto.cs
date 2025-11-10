@@ -8,9 +8,9 @@ public record AccountDto : BaseDto
     public required string Username { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
-    public CountryDto? Country { get; set; }
-    public StateDto? State { get; set; }
-    public CityDto? City { get; set; }
+    public Guid? CountryCode { get; set; }
+    public Guid? StateCode { get; set; }
+    public Guid? CityCode { get; set; }
     public string? Biography { get; set; }
     public DateOnly? DateOfBirth { get; set; }
     public decimal? Weight { get; set; }

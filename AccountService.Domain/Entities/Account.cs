@@ -26,23 +26,14 @@ public class Account : BaseEntity
     [StringLength(50)]
     public string? LastName { get; set; }
 
-    [Column("country_id")]
-    public int? CountryId { get; set; }
+    [Column("country_code")]
+    public Guid? CountryCode { get; set; }
     
-    [ForeignKey("CountryId")]
-    public Country? Country { get; set; }
+    [Column("state_code")]
+    public Guid? StateCode { get; set; }
     
-    [Column("state_id")]
-    public int? StateId { get; set; }
-    
-    [ForeignKey("StateId")]
-    public State? State { get; set; }
-    
-    [Column("city_id")]
-    public int? CityId { get; set; }
-    
-    [ForeignKey("CityId")]
-    public City? City { get; set; }
+    [Column("city_code")]
+    public Guid? CityCode { get; set; }
 
     [Column("biography", TypeName = "text")]
     public string? Biography { get; set; }
