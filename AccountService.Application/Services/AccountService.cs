@@ -33,7 +33,7 @@ public class AccountService : AbstractService<Account, AccountEntityDto, CreateA
 
     public override async Task<Guid> UpdateAsync(Guid code, UpdateAccountEntityDto updateEntityDto)
     {
-        Account account = await GetEntity(code);
+        Account account = await GetEntityAsync(code);
         
         if (account is null)
             throw new NotFoundEntityException(nameof(Account), "code", code.ToString());
