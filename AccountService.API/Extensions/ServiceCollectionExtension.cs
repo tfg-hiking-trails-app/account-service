@@ -3,6 +3,7 @@ using AccountService.API.Workers;
 using AccountService.Application.Interfaces;
 using AccountService.Application.Services;
 using AccountService.Domain.Interfaces;
+using AccountService.Domain.Interfaces.Messaging;
 using AccountService.Infrastructure.Data;
 using AccountService.Infrastructure.Data.Configurations.Mapping;
 using AccountService.Infrastructure.Data.Repositories;
@@ -42,6 +43,7 @@ public static class ServiceCollectionExtension
     private static void AddServices(this IServiceCollection services)
     {
         services.AddScoped<IEventConsumerService, EventConsumerService>();
+        services.AddScoped<IAccountCreationConsumerService, AccountCreationConsumerService>();
         services.AddScoped<ITokenManager, TokenManager>();
         services.AddScoped<IGenderService, GenderService>();
         services.AddScoped<IAccountService, Application.Services.AccountService>();
@@ -59,6 +61,7 @@ public static class ServiceCollectionExtension
     private static void AddHostedServices(this IServiceCollection services)
     {
         services.AddHostedService<Worker>();
+        services.AddHostedService<AccountCreationWorker>();
     }
     
     private static void AddAutoMapper(this IServiceCollection services)
@@ -82,7 +85,8 @@ public static class ServiceCollectionExtension
         services.AddScoped<IRabbitMqQueueProvider, RabbitMqQueueProvider>();
         
         // Processors
-        services.AddScoped<IRabbitMqQueueConsumer, RabbitMqQueueConsumer>();
+        services.AddScoped<IUsernameChangeQueueConsumer, UsernameChangeQueueConsumer>();
+        services.AddScoped<IAccountCreationQueueConsumer, AccountCreationQueueConsumer>();
     }
     
     private static void AddSwaggerGen(this IServiceCollection services)

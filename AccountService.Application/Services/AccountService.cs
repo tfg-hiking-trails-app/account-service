@@ -57,6 +57,18 @@ public class AccountService : AbstractService<Account, AccountEntityDto, CreateA
         return account.Code;
     }
 
+    public async Task CreateFromRegistrationAsync(AccountCreationEntityDto accountCreationEntityDto)
+    {
+        if (await _accountRepository.GetByCodeAsync(accountCreationEntityDto.Code) is not null)
+            return;
+        
+        await CreateAsync(new CreateAccountEntityDto
+        {
+            Code = accountCreationEntityDto.Code,
+            Username = accountCreationEntityDto.Username
+        });
+    }
+
     public async Task UpdateUsernameAsync(UpdateUsernameEntityDto updateUsernameEntityDto)
     {
         Account? account = await _accountRepository.GetByUsernameAsync(updateUsernameEntityDto.OldUsername);

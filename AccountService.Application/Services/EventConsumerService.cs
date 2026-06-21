@@ -1,16 +1,16 @@
 ﻿using AccountService.Application.DTOs.Update;
 using AccountService.Application.Interfaces;
-using Common.Domain.Interfaces.Messaging;
+using AccountService.Domain.Interfaces.Messaging;
 
 namespace AccountService.Application.Services;
 
 public class EventConsumerService : IEventConsumerService
 {
-    private readonly IRabbitMqQueueConsumer _queueConsumer;
+    private readonly IUsernameChangeQueueConsumer _queueConsumer;
     private readonly IAccountService _accountService;
 
     public EventConsumerService(
-        IRabbitMqQueueConsumer queueConsumer,
+        IUsernameChangeQueueConsumer queueConsumer,
         IAccountService accountService)
     {
         _queueConsumer = queueConsumer;
