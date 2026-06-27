@@ -98,8 +98,43 @@ public class AccountFollowService : AbstractService<AccountFollow, AccountFollow
     public async Task<int> GetFollowedCountByAccountCode(Guid accountCode)
     {
         AccountEntityDto account = await _accountService.GetByCodeAsync(accountCode);
-        
+
         return await _accountFollowRepository.GetFollowedCountByAccount(account.Id);
+    }
+
+    public async Task FollowAsync(Guid followerCode, Guid followedCode)
+    {
+        if (followerCode == followedCode)
+            throw new InvalidOperationException("An account cannot follow itself.");
+
+        AccountEntityDto follower = await _accountService.GetByCodeAsync(followerCode);
+        AccountEntityDto followed = await _accountService.GetByCodeAsync(followedCode);
+
+        if (await _accountFollowRepository.ExistsAsync(follower.Id, followed.Id))
+            return;
+
+        await _accountFollowRepository.AddFollowAsync(follower.Id, followed.Id);
+    }
+
+    public async Task UnfollowAsync(Guid followerCode, Guid followedCode)
+    {
+        AccountEntityDto follower = await _accountService.GetByCodeAsync(followerCode);
+        AccountEntityDto followed = await _accountService.GetByCodeAsync(followedCode);
+
+        AccountFollow? follow = await _accountFollowRepository.GetByFollowerAndFollowedAsync(follower.Id, followed.Id);
+
+        if (follow is null)
+            return;
+
+        await _accountFollowRepository.DeleteAsync(follow);
+    }
+
+    public async Task<bool> IsFollowingAsync(Guid followerCode, Guid followedCode)
+    {
+        AccountEntityDto follower = await _accountService.GetByCodeAsync(followerCode);
+        AccountEntityDto followed = await _accountService.GetByCodeAsync(followedCode);
+
+        return await _accountFollowRepository.ExistsAsync(follower.Id, followed.Id);
     }
 
     protected override void CheckDataValidity(CreateAccountFollowEntityDto createEntityDto)

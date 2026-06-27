@@ -138,4 +138,31 @@ public class AccountFollowRepository : AbstractRepository<AccountFollow>, IAccou
             .Where(a => a.FollowerAccountId == accountId)
             .CountAsync();
     }
+
+    public async Task<bool> ExistsAsync(int followerAccountId, int followedAccountId)
+    {
+        return await Entity
+            .AnyAsync(a => a.FollowerAccountId == followerAccountId && a.FollowedAccountId == followedAccountId);
+    }
+
+    public async Task<AccountFollow?> GetByFollowerAndFollowedAsync(int followerAccountId, int followedAccountId)
+    {
+        return await Entity
+            .FirstOrDefaultAsync(a => a.FollowerAccountId == followerAccountId && a.FollowedAccountId == followedAccountId);
+    }
+
+    public async Task AddFollowAsync(int followerAccountId, int followedAccountId)
+    {
+        Account follower = await DbContext.Set<Account>().FirstAsync(a => a.Id == followerAccountId);
+        Account followed = await DbContext.Set<Account>().FirstAsync(a => a.Id == followedAccountId);
+
+        AccountFollow follow = new AccountFollow
+        {
+            Code = Guid.NewGuid(),
+            FollowerAccount = follower,
+            FollowedAccount = followed
+        };
+
+        await AddAsync(follow);
+    }
 }

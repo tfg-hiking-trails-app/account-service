@@ -14,4 +14,8 @@ public interface IAccountFollowRepository : IRepository<AccountFollow>
 
     Task<int> GetFollowersCountByAccount(int accountId);
     Task<int> GetFollowedCountByAccount(int accountId);
+
+    Task<bool> ExistsAsync(int followerAccountId, int followedAccountId);
+    Task<AccountFollow?> GetByFollowerAndFollowedAsync(int followerAccountId, int followedAccountId);
+    Task AddFollowAsync(int followerAccountId, int followedAccountId);
 }

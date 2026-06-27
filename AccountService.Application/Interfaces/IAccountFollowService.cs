@@ -15,4 +15,8 @@ public interface IAccountFollowService : IService<AccountFollowEntityDto, Create
     Task<IEnumerable<AccountEntityDto>> GetAllFollowedByAccountCode(Guid accountCode);
     Task<int> GetFollowersCountByAccountCode(Guid accountCode);
     Task<int> GetFollowedCountByAccountCode(Guid accountCode);
+
+    Task FollowAsync(Guid followerCode, Guid followedCode);
+    Task UnfollowAsync(Guid followerCode, Guid followedCode);
+    Task<bool> IsFollowingAsync(Guid followerCode, Guid followedCode);
 }

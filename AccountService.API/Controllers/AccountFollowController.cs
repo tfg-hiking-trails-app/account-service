@@ -8,6 +8,7 @@ using AccountService.Application.Interfaces;
 using AutoMapper;
 using Common.API.Controllers;
 using Common.API.DTOs.Filter;
+using Common.API.Extensions;
 using Common.API.Utils;
 using Common.Application.DTOs.Filter;
 using Common.Application.Pagination;
@@ -175,5 +176,84 @@ public class AccountFollowController : AbstractCrudController<AccountFollowDto, 
             return BadRequest(ex.Message);
         }
     }
-    
+
+    [HttpPost("follow/{followedAccountCode:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> Follow(Guid followedAccountCode)
+    {
+        try
+        {
+            string? userCode = Request.GetUserCode();
+            if (userCode is null)
+                return Unauthorized();
+
+            await _service.FollowAsync(new Guid(userCode), followedAccountCode);
+
+            return Ok();
+        }
+        catch (NotFoundEntityException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpDelete("unfollow/{followedAccountCode:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> Unfollow(Guid followedAccountCode)
+    {
+        try
+        {
+            string? userCode = Request.GetUserCode();
+            if (userCode is null)
+                return Unauthorized();
+
+            await _service.UnfollowAsync(new Guid(userCode), followedAccountCode);
+
+            return Ok();
+        }
+        catch (NotFoundEntityException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpGet("is-following/{followedAccountCode:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<bool>> IsFollowing(Guid followedAccountCode)
+    {
+        try
+        {
+            string? userCode = Request.GetUserCode();
+            if (userCode is null)
+                return Unauthorized();
+
+            return Ok(await _service.IsFollowingAsync(new Guid(userCode), followedAccountCode));
+        }
+        catch (NotFoundEntityException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
 }
