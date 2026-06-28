@@ -109,6 +109,19 @@ public class AccountRepository : AbstractRepository<Account>, IAccountRepository
             .FirstOrDefaultAsync(a => a.Username.Equals(username));
     }
 
+    public async Task<IEnumerable<Account>> GetByCodesAsync(IEnumerable<Guid> codes)
+    {
+        return await Entity
+            .AsNoTracking()
+            .Include(a => a.Gender)
+            .Include(a => a.Following)
+            .Include(a => a.Followers)
+            .AsSplitQuery()
+            .Where(a => codes.Contains(a.Code))
+            .OrderBy(a => a.Username)
+            .ToListAsync();
+    }
+
     public async Task<IEnumerable<Account>> SearcherAsync(string search, int numberResults)
     {
         return await Entity

@@ -76,6 +76,19 @@ public class AccountController : AbstractReadController<AccountDto, AccountEntit
         }
     }
 
+    [HttpPost("by-codes")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public virtual async Task<ActionResult<IEnumerable<AccountDto>>> GetByCodes([FromBody] IEnumerable<Guid> codes)
+    {
+        if (codes is null || !codes.Any())
+            return Ok(Enumerable.Empty<AccountDto>());
+
+        IEnumerable<AccountEntityDto> result = await _accountService.GetByCodesAsync(codes);
+
+        return Ok(_mapper.Map<IEnumerable<AccountDto>>(result));
+    }
+
     [HttpGet("searcher")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

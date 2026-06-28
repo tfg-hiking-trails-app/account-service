@@ -81,10 +81,17 @@ public class AccountService : AbstractService<Account, AccountEntityDto, CreateA
         await _accountRepository.SaveChangesAsync();
     }
 
+    public async Task<IEnumerable<AccountEntityDto>> GetByCodesAsync(IEnumerable<Guid> codes)
+    {
+        IEnumerable<Account> accounts = await _accountRepository.GetByCodesAsync(codes);
+
+        return Mapper.Map<IEnumerable<AccountEntityDto>>(accounts);
+    }
+
     public async Task<IEnumerable<AccountEntityDto>> SearcherAsync(string search, int numberResults)
     {
         IEnumerable<Account> accounts = await _accountRepository.SearcherAsync(search, numberResults);
-        
+
         return Mapper.Map<IEnumerable<AccountEntityDto>>(accounts);
     }
 

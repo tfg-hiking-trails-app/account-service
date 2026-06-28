@@ -7,5 +7,6 @@ public interface IAccountRepository : IRepository<Account>
 {
     Account? GetByUsername(string username);
     Task<Account?> GetByUsernameAsync(string username);
+    Task<IEnumerable<Account>> GetByCodesAsync(IEnumerable<Guid> codes);
     Task<IEnumerable<Account>> SearcherAsync(string search, int numberResults);
 }
