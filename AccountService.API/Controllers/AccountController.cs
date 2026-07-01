@@ -76,6 +76,34 @@ public class AccountController : AbstractReadController<AccountDto, AccountEntit
         }
     }
 
+    [HttpDelete("logged/profile-picture")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> DeleteProfilePicture()
+    {
+        try
+        {
+            string? userCode = Request.GetUserCode();
+
+            if (userCode is null)
+                return Unauthorized();
+
+            await _accountService.DeleteProfilePictureAsync(new Guid(userCode));
+
+            return NoContent();
+        }
+        catch (NotFoundEntityException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
     [HttpPost("by-codes")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -69,6 +69,15 @@ public class AccountService : AbstractService<Account, AccountEntityDto, CreateA
         });
     }
 
+    public async Task DeleteProfilePictureAsync(Guid code)
+    {
+        Account account = await GetEntityAsync(code);
+
+        account.ProfilePicture = null;
+
+        await Repository.SaveChangesAsync();
+    }
+
     public async Task UpdateUsernameAsync(UpdateUsernameEntityDto updateUsernameEntityDto)
     {
         Account? account = await _accountRepository.GetByUsernameAsync(updateUsernameEntityDto.OldUsername);
